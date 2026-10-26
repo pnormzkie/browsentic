@@ -303,6 +303,10 @@ rather than silent: `secret-release` asks, and `secret-off-scope` says so when t
 read somewhere else. The seal removes the value from the model's reach; the policy decides where the
 model may spend it.
 
+The site that rule reads is the one written in the handle, and the agent writes the handle back, so
+release also checks it: a handle resolves only if its site and kind are still the ones the vault
+sealed it with. One rewritten to name the page it is aimed at resolves to nothing, like a forgery.
+
 ### Where sealing runs
 
 | Side | Where | What it does |

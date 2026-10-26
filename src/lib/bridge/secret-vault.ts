@@ -83,9 +83,12 @@ export function releaseForAction(action: string, input: unknown): Promise<Releas
     const now = Date.now();
     const touched: VaultEntry[] = [];
 
+    // A handle's origin and kind are what the policy judges it by, and the agent writes the handle
+    // back. One whose text no longer says what was sealed has been rewritten, so it resolves to nothing.
     const resolve = (handle: Handle): string | null => {
       const entry = vault.entries.find((held) => held.id === handle.id);
       if (!entry || now - entry.at >= TTL_MS) return null;
+      if (entry.kind !== handle.kind || (entry.origin ?? undefined) !== (handle.origin ?? undefined)) return null;
       entry.at = now;
       touched.push(entry);
       return entry.value;
